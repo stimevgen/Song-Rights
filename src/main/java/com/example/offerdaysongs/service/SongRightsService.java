@@ -7,14 +7,13 @@ import com.example.offerdaysongs.model.Company;
 import com.example.offerdaysongs.model.Recording;
 import com.example.offerdaysongs.model.Singer;
 import com.example.offerdaysongs.model.SongRights;
-import com.example.offerdaysongs.repository.CompanyRepository;
-import com.example.offerdaysongs.repository.RecordingRepository;
-import com.example.offerdaysongs.repository.SingerRepository;
-import com.example.offerdaysongs.repository.SongRightsRepository;
+import com.example.offerdaysongs.repository.*;
 import org.springframework.stereotype.Service;
 
+import javax.sql.rowset.serial.SerialJavaObject;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SongRightsService {
@@ -23,7 +22,8 @@ public class SongRightsService {
     private final RecordingRepository recordingRepository;
     private final SingerRepository singerRepository;
 
-    public SongRightsService(SongRightsRepository songRightsRepository, CompanyRepository companyRepository, RecordingRepository recordingRepository, SingerRepository singerRepository) {
+    public SongRightsService(SongRightsRepository songRightsRepository, CompanyRepository companyRepository,
+                             RecordingRepository recordingRepository, SingerRepository singerRepository) {
         this.songRightsRepository = songRightsRepository;
         this.companyRepository = companyRepository;
         this.recordingRepository = recordingRepository;
@@ -95,8 +95,11 @@ public class SongRightsService {
         return songRightsRepository.getById(request.getId());
     }
 
-    public List<SongRightDTO> getSongRight(String songTitle){
-        return songRightsRepository.getSongRight(songTitle);
+    public List<SongRightDTO> getSongRight(String songTitle) {
+        return songRightsRepository.getSongRight(songTitle).stream()
+                .map(rightViewDTO -> new SongRightDTO(rightViewDTO.getTitle(), rightViewDTO.getSinger(),
+                        rightViewDTO.getCompany(), rightViewDTO.getPrice()))
+                .collect(Collectors.toList());
     }
 
 }

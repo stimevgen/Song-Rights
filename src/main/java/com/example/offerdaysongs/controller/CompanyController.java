@@ -47,8 +47,8 @@ public class CompanyController {
     }
 
 
-    private CompanyDto convertToDto(Company company){
+    private CompanyDto convertToDto(Company company) {
         return new CompanyDto(company.getId(), company.getName());
-     }
+    }
 
 }

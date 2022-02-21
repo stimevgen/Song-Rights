@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/songrights")
 public class SongRightsController {
     private static final String ID = "id";
-    private static final String COMPANY_NAME = "companyName";
+    private static final String PARAM = "param";
     private final SongRightsService songRightsService;
 
     public SongRightsController(SongRightsService songRightsService) {
@@ -28,8 +28,8 @@ public class SongRightsController {
         return convertToDto(songRights);
     }
 
-    @GetMapping("/company/{companyName}")
-    public List<SongRightsDTO> getSongRightsByCompany(@PathVariable(COMPANY_NAME) String companyName) {
+    @GetMapping("/company/{param}")
+    public List<SongRightsDTO> getSongRightsByCompany(@PathVariable(PARAM) String companyName) {
         return songRightsService.getSongRightsByCompany(companyName).stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
@@ -49,8 +49,8 @@ public class SongRightsController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/song/{companyName}")
-    public List<SongRightDTO> getSongRight(@PathVariable(COMPANY_NAME) String songTitle){
+    @GetMapping("/song/{param}")
+    public List<SongRightDTO> getSongRight(@PathVariable(PARAM) String songTitle) {
         return songRightsService.getSongRight(songTitle);
     }
 
@@ -60,7 +60,7 @@ public class SongRightsController {
     }
 
     @PutMapping("/")
-    public SongRightsDTO update(@RequestBody UpdateSongRightsRequest request){
+    public SongRightsDTO update(@RequestBody UpdateSongRightsRequest request) {
         return convertToDto(songRightsService.update(request));
     }
 

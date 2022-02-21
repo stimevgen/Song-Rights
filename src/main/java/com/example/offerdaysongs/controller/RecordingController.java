@@ -28,7 +28,7 @@ public class RecordingController {
     }
 
     @GetMapping("/")
-    public List<RecordingDto> getAll(){
+    public List<RecordingDto> getAll() {
         return recordingService.getAll().stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
@@ -45,15 +45,13 @@ public class RecordingController {
         return convertToDto(recordingService.create(request));
     }
 
-    private RecordingDto convertToDto(Recording recording)
-    {
+    private RecordingDto convertToDto(Recording recording) {
         var singer = recording.getSinger();
         return new RecordingDto(recording.getId(),
-                                recording.getTitle(),
-                                recording.getVersion(),
-                                recording.getReleaseTime(),
-                                singer != null ? new SingerDto(singer.getId(), singer.getName()) : null);
-
+                recording.getTitle(),
+                recording.getVersion(),
+                recording.getReleaseTime(),
+                singer != null ? new SingerDto(singer.getId(), singer.getName()) : null);
 
 
     }

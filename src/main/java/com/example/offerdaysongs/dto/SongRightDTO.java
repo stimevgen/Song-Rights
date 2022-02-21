@@ -11,5 +11,5 @@ public class SongRightDTO {
     String title;
     String singer;
     String company;
-    double price;
+    Double price;
 }

@@ -27,6 +27,7 @@ class OfferDaySongsApplicationTests {
         System.out.println(companyController.getAll());
         System.out.println(recordingController.getAll());
         System.out.println(singerController.getAll());
+        System.out.println(songRightsController.getAll());
 
         }
     }

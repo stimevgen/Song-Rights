@@ -1,6 +1,5 @@
 package com.example.offerdaysongs.repository;
 
-import com.example.offerdaysongs.dto.SongRightDTO;
 import com.example.offerdaysongs.model.SongRights;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -26,7 +25,7 @@ public interface SongRightsRepository extends JpaRepository<SongRights, Long>, J
             "            r.release_time between :date_begin and :date_end", nativeQuery = true)
     List<SongRights> findByPeriod(@Param("date_begin") String date_begin, @Param("date_end") String date_end);
 
-    @Modifying(flushAutomatically = true,clearAutomatically = true)
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
     @Query(value = "update SONG_RIGHTS set RECORDING_ID =:recording_id, COMPANY_ID = :company_id, " +
             "       PRICE = :price where ID =:id", nativeQuery = true)
     void updateSongRights(@Param("id") long id,
@@ -34,11 +33,11 @@ public interface SongRightsRepository extends JpaRepository<SongRights, Long>, J
                           @Param("company_id") long companyId,
                           @Param("price") double price);
 
-    @Query(value = "SELECT r.title, s.name AS singer, isnull(c.name,'') AS company, isnull(sr.price,0)" +
+    @Query(value = "SELECT r.title, s.name AS singer, isnull(c.name,'') AS company, isnull(sr.price,0) AS price" +
             "       FROM RECORDING r" +
             "       left join SONG_RIGHTS  sr on sr.RECORDING_ID = r.ID" +
             "       left join COMPANY c on c.ID = sr.COMPANY_ID " +
             "       left join SINGER s on s.ID = r.SINGER_ID" +
-            "       where r.TITLE = :title",nativeQuery = true)
-    List<SongRightDTO> getSongRight (@Param("title") String songTitle);
+            "       where r.TITLE = :title", nativeQuery = true)
+    List<SongRightInt> getSongRight(@Param("title") String songTitle);
 }
