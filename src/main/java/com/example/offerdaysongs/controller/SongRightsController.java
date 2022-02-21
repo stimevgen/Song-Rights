@@ -1,9 +1,6 @@
 package com.example.offerdaysongs.controller;
 
-import com.example.offerdaysongs.dto.CompanyDto;
-import com.example.offerdaysongs.dto.RecordingDto;
-import com.example.offerdaysongs.dto.SingerDto;
-import com.example.offerdaysongs.dto.SongRightsDTO;
+import com.example.offerdaysongs.dto.*;
 import com.example.offerdaysongs.dto.requests.CreateSongRightsRequest;
 import com.example.offerdaysongs.dto.requests.UpdateSongRightsRequest;
 import com.example.offerdaysongs.model.SongRights;
@@ -50,6 +47,11 @@ public class SongRightsController {
         return songRightsService.getAll().stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/song/{companyName}")
+    public List<SongRightDTO> getSongRight(@PathVariable(COMPANY_NAME) String songTitle){
+        return songRightsService.getSongRight(songTitle);
     }
 
     @PostMapping("/")

@@ -1,5 +1,6 @@
 package com.example.offerdaysongs.repository;
 
+import com.example.offerdaysongs.dto.SongRightDTO;
 import com.example.offerdaysongs.model.SongRights;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -32,4 +33,12 @@ public interface SongRightsRepository extends JpaRepository<SongRights, Long>, J
                           @Param("recording_id") long recordingId,
                           @Param("company_id") long companyId,
                           @Param("price") double price);
+
+    @Query(value = "SELECT r.title, s.name AS singer, isnull(c.name,'') AS company, isnull(sr.price,0)" +
+            "       FROM RECORDING r" +
+            "       left join SONG_RIGHTS  sr on sr.RECORDING_ID = r.ID" +
+            "       left join COMPANY c on c.ID = sr.COMPANY_ID " +
+            "       left join SINGER s on s.ID = r.SINGER_ID" +
+            "       where r.TITLE = :title",nativeQuery = true)
+    List<SongRightDTO> getSongRight (@Param("title") String songTitle);
 }

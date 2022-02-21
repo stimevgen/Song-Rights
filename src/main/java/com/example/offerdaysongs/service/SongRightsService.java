@@ -1,5 +1,6 @@
 package com.example.offerdaysongs.service;
 
+import com.example.offerdaysongs.dto.SongRightDTO;
 import com.example.offerdaysongs.dto.requests.CreateSongRightsRequest;
 import com.example.offerdaysongs.dto.requests.UpdateSongRightsRequest;
 import com.example.offerdaysongs.model.Company;
@@ -92,6 +93,10 @@ public class SongRightsService {
             songRightsRepository.updateSongRights(songRights.getId(), recordingDto.getId(), companyDto.getId(), request.getPrice());
         }
         return songRightsRepository.getById(request.getId());
+    }
+
+    public List<SongRightDTO> getSongRight(String songTitle){
+        return songRightsRepository.getSongRight(songTitle);
     }
 
 }
